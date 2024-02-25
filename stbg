@@ -40,16 +40,18 @@ TESTER:AddButton({
 -- Add Button for Sonic Kill All
 TESTER:AddButton({
     Name = "Sonic Kill All",
+    
     Callback = function(value)
+    wait()
         local args = {
             [1] = {
                 ["Goal"] = "Console Move",
                 ["Tool"] = game:GetService("Players").LocalPlayer.Backpack:WaitForChild("Scatter")
             }
         }
-
         game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
-wait(2)
+wait(0.9)
+
         local players = game:GetService("Players"):GetPlayers()
         local savepoint = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
 
@@ -60,8 +62,8 @@ wait(2)
             end
         end
 
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(301.9686584472656, 671.1041870117188, 384.4476318359375)
-        wait(1)
+      
+        wait()
         -- Restore to the original position
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savepoint
     end
