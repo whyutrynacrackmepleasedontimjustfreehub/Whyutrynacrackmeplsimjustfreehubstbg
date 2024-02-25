@@ -58,7 +58,7 @@ wait(0.6)
         for _, player in ipairs(players) do
             if player ~= game.Players.LocalPlayer then
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame
-                wait(0.05)
+                wait(0.2)
             end
         end
 
