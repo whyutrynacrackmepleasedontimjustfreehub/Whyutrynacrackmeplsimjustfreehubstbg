@@ -178,7 +178,7 @@ MainSection:AddButton({
 
 -- Add Button for Auto Farm Player
 MainSection:AddButton({
-    Name = "Auto Kill Brutal Demon (Skill 2)",
+    Name = "Auto Kill Garou (Skill 1)",
     Callback = function(value)
 
             local savepoint = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
@@ -203,7 +203,7 @@ MainSection:AddButton({
                  local args = {
                     [1] = {
                         ["Goal"] = "Console Move",
-                        ["Tool"] = game:GetService("Players").LocalPlayer.Backpack:WaitForChild("Beatdown")
+                        ["Tool"] = game:GetService("Players").LocalPlayer.Backpack:WaitForChild("Flowing Water")
                     }
                 }
                 
@@ -220,7 +220,7 @@ end
                       local TweenService = game:GetService("TweenService")
                     local Tw = TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(0.2, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0), 
                     {CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,-500,1000)}):Play()
-                    wait(2.5)
+                    wait(2)
                     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savepoint
                     end
                     end
