@@ -52,11 +52,20 @@ part.Parent = game.Workspace -- Set the part's parent to the workspace
 
 AddonSection:AddButton({
     Name = "TP To Part",
+    Keybind = 1,
     Callback = function(value)
-     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(323.956116, 601.358643, 656.665466, 0.969358683, -1.57588276e-09, 0.245649666, 9.36963632e-11, 1, 6.04542771e-09, -0.245649666, -5.83717163e-09, 0.969358683)
 
+            local players = game:GetService("Players"):GetPlayers()
+        local savepoint = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
 
-    end
+     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(289.685669, 597.858826, 598.951111, 0.29345116, 4.00540978e-09, 0.955974042, -1.47396359e-10, 1, -4.14462731e-09, -0.955974042, 1.0753386e-09, 0.29345116)
+       
+       wait(2)
+        -- Restore to the original position
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savepoint
+    end 
+    
+    
 })
 
 -- Add Button for VOID GUI
@@ -108,8 +117,7 @@ wait(0.7)
 })
 
 TESTER:AddButton({
-    Name = "Brutal Demon Bring all(Ulti)",
-    
+    Name = "Brutal Demon Bring all(Ulti)",    
     Callback = function(value)
     wait()
         local args = {
