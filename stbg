@@ -145,11 +145,18 @@ TESTER:AddButton({
     end
 })
 
--- Populate Playerslist
 local Playerslist = {}
-for i, v in pairs(game:GetService("Players"):GetChildren()) do
-    table.insert(Playerslist, v.Name)
+
+-- Function to update player list
+local function UpdatePlayerList()
+    Playerslist = {}
+    for i, v in pairs(game:GetService("Players"):GetChildren()) do
+        table.insert(Playerslist, v.Name)
+    end
 end
+
+-- Initial player list update
+UpdatePlayerList()
 
 -- Add Dropdown for Select Player
 MainSection:AddDropdown({
@@ -165,13 +172,12 @@ MainSection:AddDropdown({
 MainSection:AddButton({
     Name = "Refresh Player",
     Callback = function()
-        Playerslist = {}
-        SelectedPly:Clear()
-        for i, v in pairs(game:GetService("Players"):GetChildren()) do
-            SelectedPly:Add(v.Name)
-        end
+        UpdatePlayerList()
+        -- Update dropdown list
+        MainSection:FindFirstChild("Select Player").List = Playerslist
     end
 })
+
 
 -- Add Button for Teleport To Player
 MainSection:AddButton({
