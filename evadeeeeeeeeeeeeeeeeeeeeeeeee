@@ -1,0 +1,135 @@
+-- Elastic Hub Executed 
+print("// Elastic Hub Executed \\")
+
+-- Load the library
+local library = loadstring(game:GetObjects("rbxassetid://7657867786")[1].Source)()
+local Wait = library.subs.Wait -- Only returns if the GUI has not been terminated.
+
+-- Declare necessary variables
+local speedwalking = 0 -- Default walking speed
+local tpwalking = true -- Default walking state
+
+-- Create the GUI window and tabs
+local ElasticHubWindow = library:CreateWindow({
+    Name = "Elastic Hub (EVADE)",
+    Themeable = {}
+})
+
+local GeneralTab = ElasticHubWindow:CreateTab({
+    Name = "General"
+})
+
+local MainSection = GeneralTab:CreateSection({
+    Name = "Main"
+})
+
+local MiscTab = ElasticHubWindow:CreateTab({
+    Name = "Misc"
+})
+
+local MiscSection = MiscTab:CreateSection({
+    Name = "Misc"
+})
+
+-- Add buttons for creating part and teleporting to part
+local AddonSection = GeneralTab:CreateSection({
+    Name = "Addon",
+    Side = "Right"  -- Placing AddonSection on the right side of the GUI
+})
+
+AddonSection:AddButton({
+    Name = "Create Part",
+    Callback = function(value)
+        local part = Instance.new("Part")
+        part.Size = Vector3.new(300, 1, 300)
+        part.Position = Vector3.new(289.685669, 597.858826, 598.951111)
+        part.CFrame = CFrame.new(289.685669, 597.858826, 598.951111, 0.29345116, 4.00540978e-09, 0.955974042, -1.47396359e-10, 1, -4.14462731e-09, -0.955974042, 1.0753386e-09, 0.29345116)
+        part.Anchored = true
+        part.Parent = game.Workspace
+    end
+})
+
+AddonSection:AddButton({
+    Name = "TP To Part",
+    Keybind = 1,
+    Callback = function(value)
+        local savepoint = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(289.685669, 597.858826, 598.951111, 0.29345116, 4.00540978e-09, 0.955974042, -1.47396359e-10, 1, -4.14462731e-09, -0.955974042, 1.0753386e-09, 0.29345116)
+        wait(2)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savepoint
+    end 
+})
+
+-- Add Toggle Button for Spectate Player
+MainSection:AddToggle({
+    Name = "Spectate Player",
+    Flag = "SpectatePlayer",
+    Callback = function(value)
+        -- Your code for spectating goes here
+    end
+})
+
+-- Add Button for Rejoin
+MiscSection:AddButton({
+    Name = "Rejoin",
+    Callback = function(value)
+        game:GetService("TeleportService"):Teleport(game.PlaceId)
+    end
+})
+
+-- Add Button for Hop
+MiscSection:AddButton({
+    Name = "Hop",
+    Callback = function(value)
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/LeoKholYt/roblox/main/lk_serverhop.lua"))():Teleport(game.PlaceId)
+    end
+})
+
+-- Function to check if a string is a number or 'inf'
+local function isNumber(str)
+    return tonumber(str) ~= nil or str == 'inf'
+end
+
+-- Speedwalking function
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local speaker = Players.LocalPlayer
+local hb = RunService.Heartbeat
+
+local FarmingSection = GeneralTab:CreateSection({
+    Name = "Character"
+})
+
+-- Add Slider for setting the walk speed
+FarmingSection:AddSlider({
+    Name = "Setwalkspeed",
+    Min = 0,
+    Max = 200,
+    Value = speedwalking,
+    Format = function(value)
+        if value == 0 then
+            return "Speed 0"
+        else
+            return "Your speed now: " .. tostring(value)
+        end
+    end,
+    Callback = function(value)
+        speedwalking = value
+    end
+})
+
+-- Main loop for speedwalking
+while tpwalking do
+    local chr = speaker.Character
+    local hum = chr and chr:FindFirstChildOfClass("Humanoid")
+    if chr and hum and hum.Parent then
+        local delta = hb:Wait()
+        if hum.MoveDirection.Magnitude > 0 then
+            if isNumber(speedwalking) then
+                chr:TranslateBy(hum.MoveDirection * speedwalking * delta * 10)
+            else
+                chr:TranslateBy(hum.MoveDirection * delta * 10)
+            end
+        end
+    end
+end
