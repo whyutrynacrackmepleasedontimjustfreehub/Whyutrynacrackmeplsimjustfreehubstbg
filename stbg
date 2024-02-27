@@ -79,20 +79,6 @@ TESTER:AddButton({
     end
 })
 
-TESTER:AddButton({
-    Name = "Jail in atom",
-    Callback = function(value)
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1064.5376, 153.16777, 23007.7812, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-    end
-})
-
-TESTER:AddButton({
-    Name = "Domain Saitama",
-    Callback = function(value)
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-64.2775421, 39.7636375, 20333.8164, -0.917966723, 0.00943596568, 0.396545619, 3.10819596e-05, 0.999718726, -0.0237167664, -0.396657854, -0.021758873, -0.917708755)
-    end
-})
-
 -- Add Button for Sonic Bring All
 TESTER:AddButton({
     Name = "Sonic Bring All",
@@ -145,18 +131,11 @@ TESTER:AddButton({
     end
 })
 
+-- Populate Playerslist
 local Playerslist = {}
-
--- Function to update player list
-local function UpdatePlayerList()
-    Playerslist = {}
-    for i, v in pairs(game:GetService("Players"):GetChildren()) do
-        table.insert(Playerslist, v.Name)
-    end
+for i, v in pairs(game:GetService("Players"):GetChildren()) do
+    table.insert(Playerslist, v.Name)
 end
-
--- Initial player list update
-UpdatePlayerList()
 
 -- Add Dropdown for Select Player
 MainSection:AddDropdown({
@@ -172,12 +151,13 @@ MainSection:AddDropdown({
 MainSection:AddButton({
     Name = "Refresh Player",
     Callback = function()
-        UpdatePlayerList()
-        -- Update dropdown list
-        MainSection:FindFirstChild("Select Player").List = Playerslist
+        Playerslist = {}
+        SelectedPly:Clear()
+        for i, v in pairs(game:GetService("Players"):GetChildren()) do
+            SelectedPly:Add(v.Name)
+        end
     end
 })
-
 
 -- Add Button for Teleport To Player
 MainSection:AddButton({
@@ -210,7 +190,7 @@ MainSection:AddButton({
                     game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
                     for i = 1, 3 do
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[_G.SelectPly].Character.HumanoidRootPart.CFrame * CFrame.new(0,0,1)
-                        wait(.3)
+                        wait(.1)
                     end
                 end
                 wait(0.6)
@@ -284,12 +264,12 @@ local Players = game:GetService("Players")
 local speaker = Players.LocalPlayer
 local hb = RunService.Heartbeat
 
-local FarmingSection = GeneralTab:CreateSection({
-    Name = "Character"
+local CharacterSection = GeneralTab:CreateSection({
+    Name = "Speed"
 })
 
 -- Add Slider for setting the walk speed
-FarmingSection:AddSlider({
+CharacterSection:AddSlider({
     Name = "Setwalkspeed",
     Value = speedwalking,
     Min = 0,
